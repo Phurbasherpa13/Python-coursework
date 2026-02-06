@@ -1,9 +1,1 @@
-#Introduction to programming (coursework)
-# Secure Chat App 
-A simple secure chat application built with:
-- **Tkinter** for GUI
-- **WebSockets** for real-time messaging
-- **AES-256 Encryption** with PBKDF2 key derivation
-- **Message integrity** via cryptographic principles
-
-
+🔒 Secure WebSocket Chat Application A secure, real-time messaging application built with Python. This project demonstrartes End-to-End Encrpytion (E2EE) using AES-18, implemented via the Fernet module, over a WebSocket connection using Tkinter for the Gui. This project was developed as a coursework assignment for Introduction to programming.
