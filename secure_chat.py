@@ -9,4 +9,9 @@ import hashlib
 import base64
 import nest_asyncio # Allows asyncio to run in a nested way (useful for Tkinter integration)
 
+try:
+    import nest_asyncio
+    nest_asyncio.apply()
+except ImportError:
+    pass # We will handle this in requirements if needed
 
