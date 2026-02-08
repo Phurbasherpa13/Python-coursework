@@ -15,3 +15,5 @@ try:
 except ImportError:
     pass # We will handle this in requirements if needed
 
+from cryptography.fernet import Fernet, InvalidToken
+
