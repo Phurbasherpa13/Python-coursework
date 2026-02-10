@@ -63,3 +63,11 @@ class ChatCore:
         asyncio.set_event_loop(self.loop)
         self.loop.run_forever()
 
+    async def host_server(self, host, port):
+        try:
+            async with websockets.serve(self.handle_connection, host, port):
+                self.log(f"[SYSTEM] WebSocket Server started on ws://{host}:{port}")
+                # Keep server running indefinitely
+                await asyncio.Future()
+
+    
