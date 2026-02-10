@@ -49,3 +49,6 @@ class ChatCore:
         self.security = None
         self.running = False
 
+    def set_security(self, password):
+        self.security = SecurityEngine(password)
+
