@@ -58,3 +58,8 @@ class ChatCore:
         self.thread = threading.Thread(target=self.run_loop, daemon=True)
         self.thread.start()
 
+    def run_loop(self):
+        self.loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(self.loop)
+        self.loop.run_forever()
+
