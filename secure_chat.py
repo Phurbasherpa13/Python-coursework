@@ -69,5 +69,8 @@ class ChatCore:
                 self.log(f"[SYSTEM] WebSocket Server started on ws://{host}:{port}")
                 # Keep server running indefinitely
                 await asyncio.Future()
+        except Exception as e:
+            self.log(f"[Error] Server failed: {e}")
+            self.on_disconnected()
 
-    
+ 
