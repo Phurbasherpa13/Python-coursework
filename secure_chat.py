@@ -39,3 +39,5 @@ class SecurityEngine:
             return "[Error: Decryption Failed]"
 
 
+class ChatCore:
+    
