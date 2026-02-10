@@ -73,4 +73,19 @@ class ChatCore:
             self.log(f"[Error] Server failed: {e}")
             self.on_disconnected()
 
- 
+    async def handle_connection(self, websocket):
+        self.websocket = websocket
+        self.on_connected("Client Connected")
+        self.log("[SYSTEM] Secure WebSocket connection established.")
+        
+        try:
+            async for message in websocket:
+                decrypted = self.security.decrypt_message(message)
+                self.log(f"[Friend] {decrypted}")
+        except websockets.exceptions.ConnectionClosed:
+            self.log("[SYSTEM] Connection closed.")
+        except Exception as e:
+            self.log(f"[Error] {e}")
+        finally:
+            self.on_disconnected()
+
