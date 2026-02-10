@@ -52,3 +52,9 @@ class ChatCore:
     def set_security(self, password):
         self.security = SecurityEngine(password)
 
+    def start_thread(self):
+        """Starts the asyncio event loop in a separate thread."""
+        self.running = True
+        self.thread = threading.Thread(target=self.run_loop, daemon=True)
+        self.thread.start()
+
