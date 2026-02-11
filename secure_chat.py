@@ -103,3 +103,10 @@ class ChatCore:
             self.log(f"[Error] Connection failed: {e}")
             self.on_disconnected()
 
+    def send(self, message):
+        """Sends message via asyncio from the GUI thread."""
+        if not self.websocket or not self.security:
+            return
+        
+        encrypted = self.security.encrypt_message(message)
+        
