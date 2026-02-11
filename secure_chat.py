@@ -119,3 +119,9 @@ class ChatCore:
         self.running = False
 
 
+
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    root.mainloop()
+    
