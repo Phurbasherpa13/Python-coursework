@@ -110,3 +110,12 @@ class ChatCore:
         
         encrypted = self.security.encrypt_message(message)
         
+        # Schedule the send coroutine in the async loop
+        asyncio.run_coroutine_threadsafe(self.websocket.send(encrypted), self.loop)
+
+    def stop(self):
+        if self.loop:
+            self.loop.call_soon_threadsafe(self.loop.stop)
+        self.running = False
+
+
