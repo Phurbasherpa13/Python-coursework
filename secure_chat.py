@@ -126,7 +126,8 @@ class SecureChatApp:
         self.root.geometry("600x700")
         self.root.configure(bg="#1e1e1e")
 
-
+        # File for saving history
+        self.log_file = "chat_history.txt"
 
 if __name__ == "__main__":
     root = tk.Tk()
