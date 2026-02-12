@@ -144,6 +144,15 @@ class SecureChatApp:
             disconnected_callback=self.on_disconnected
         )
 
+        self.create_widgets()
+        self.core.start_thread()
+        
+        # Load previous chat history on startup
+        self.load_history()
+        
+        # Handle window close event to ensure everything is saved (though we save instantly)
+        self.root.protocol("WM_DELETE_WINDOW", self.on_close)
+
 
 
 if __name__ == "__main__":
