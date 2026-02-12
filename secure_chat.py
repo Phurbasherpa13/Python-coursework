@@ -190,6 +190,18 @@ class SecureChatApp:
         self.chat_log = scrolledtext.ScrolledText(self.root, bg="black", fg="#00ff00", font=("Consolas", 10), state="disabled")
         self.chat_log.pack(fill="both", expand=True, padx=20)
 
+        # Input
+        input_frame = ttk.Frame(self.root)
+        input_frame.pack(fill="x", padx=20, pady=10)
+        self.msg_entry = ttk.Entry(input_frame, font=("Consolas", 10))
+        self.msg_entry.pack(side="left", fill="x", expand=True)
+        self.msg_entry.bind("<Return>", lambda e: self.send())
+        self.send_btn = ttk.Button(input_frame, text="SEND", command=self.send, state="disabled")
+        self.send_btn.pack(side="right", padx=5)
+
+    # --- New Persistence Functions ---
+
+
 
 if __name__ == "__main__":
     root = tk.Tk()
