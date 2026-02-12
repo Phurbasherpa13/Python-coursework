@@ -186,7 +186,10 @@ class SecureChatApp:
         self.conn_btn = ttk.Button(btn_frame, text="JOIN (Client)", command=self.start_client)
         self.conn_btn.pack(side="left", padx=5)
 
-    
+        # Chat Display
+        self.chat_log = scrolledtext.ScrolledText(self.root, bg="black", fg="#00ff00", font=("Consolas", 10), state="disabled")
+        self.chat_log.pack(fill="both", expand=True, padx=20)
+
 
 if __name__ == "__main__":
     root = tk.Tk()
