@@ -153,7 +153,40 @@ class SecureChatApp:
         # Handle window close event to ensure everything is saved (though we save instantly)
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
 
+    def create_widgets(self):
+        # Header
+        ttk.Label(self.root, text=">> SECURE WEBSOCKET CHAT <<", font=("Consolas", 16, "bold")).pack(pady=10)
 
+        # Config
+        config_frame = ttk.Frame(self.root)
+        config_frame.pack(fill="x", padx=20)
+        
+        ttk.Label(config_frame, text="IP:").grid(row=0, column=0)
+        self.ip_entry = ttk.Entry(config_frame, width=15)
+        self.ip_entry.insert(0, "127.0.0.1")
+        self.ip_entry.grid(row=0, column=1, padx=5)
+
+        ttk.Label(config_frame, text="Port:").grid(row=0, column=2)
+        self.port_entry = ttk.Entry(config_frame, width=8)
+        self.port_entry.insert(0, "8765")
+        self.port_entry.grid(row=0, column=3, padx=5)
+
+        ttk.Label(config_frame, text="Key:").grid(row=1, column=0, pady=5)
+        self.key_entry = ttk.Entry(config_frame, show="*", width=20)
+        self.key_entry.insert(0, "MySecretKey")
+        self.key_entry.grid(row=1, column=1, columnspan=3, pady=5)
+
+        # Buttons
+        btn_frame = ttk.Frame(self.root)
+        btn_frame.pack(pady=10)
+        
+        self.host_btn = ttk.Button(btn_frame, text="HOST (Server)", command=self.start_host)
+        self.host_btn.pack(side="left", padx=5)
+        
+        self.conn_btn = ttk.Button(btn_frame, text="JOIN (Client)", command=self.start_client)
+        self.conn_btn.pack(side="left", padx=5)
+
+    
 
 if __name__ == "__main__":
     root = tk.Tk()
