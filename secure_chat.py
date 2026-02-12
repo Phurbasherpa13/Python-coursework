@@ -137,6 +137,14 @@ class SecureChatApp:
         self.style.configure("TButton", font=("Consolas", 10, "bold"), background="#00cc00")
         self.style.map("TButton", background=[("active", "#00ff00")])
 
+        # Core Logic
+        self.core = ChatCore(
+            log_callback=self.log_to_chat,
+            connected_callback=self.on_connected,
+            disconnected_callback=self.on_disconnected
+        )
+
+
 
 if __name__ == "__main__":
     root = tk.Tk()
