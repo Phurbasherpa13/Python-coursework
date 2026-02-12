@@ -201,7 +201,97 @@ class SecureChatApp:
 
     # --- New Persistence Functions ---
 
+    def save_to_file(self, message):
+        """Saves the log message to a text file with a timestamp."""
+        try:
+            timestamp = datetime.now().strftime("[%Y-%m-%d %H:%M:%S]")
+            with open(self.log_file, "a", encoding="utf-8") as f:
+                f.write(f"{timestamp} {message}\n")
+        except Exception as e:
+            print(f"Error saving log: {e}")
 
+    def load_history(self):
+        """Reads the log file and displays past messages."""
+        if os.path.exists(self.log_file):
+            try:
+                with open(self.log_file, "r", encoding="utf-8") as f:
+                    history = f.read()
+                    if history:
+                        self.chat_log.config(state="normal")
+                        self.chat_log.insert(tk.END, history)
+                        self.chat_log.see(tk.END)
+                        self.chat_log.config(state="disabled")
+            except Exception as e:
+                print(f"Error loading history: {e}")
+
+    def on_close(self):
+        """Safely disconnect and close."""
+        self.core.stop()
+        self.root.destroy()
+
+    # --- Existing Networking Logic ---
+
+    def start_host(self):
+        if not self.check_inputs(): return
+        asyncio.run_coroutine_threadsafe(
+            self.core.host_server(self.ip_entry.get(), int(self.port_entry.get())),
+            self.core.loop
+        )
+        self.toggle_inputs(False)
+
+    def start_client(self):
+        if not self.check_inputs(): return
+        uri = f"ws://{self.ip_entry.get()}:{self.port_entry.get()}"
+        asyncio.run_coroutine_threadsafe(
+            self.core.connect_client(uri),
+            self.core.loop
+        )
+        self.toggle_inputs(False)
+
+    def check_inputs(self):
+        if not self.key_entry.get():
+            messagebox.showerror("Error", "Encryption Key required")
+            return False
+        self.core.set_security(self.key_entry.get())
+        return True
+
+    def toggle_inputs(self, enable):
+        state = "normal" if enable else "disabled"
+        self.host_btn.config(state=state)
+        self.conn_btn.config(state=state)
+        self.send_btn.config(state=state if not enable else "disabled") # Invert logic for send button
+        self.ip_entry.config(state=state)
+        self.port_entry.config(state=state)
+        self.key_entry.config(state=state)
+
+    def send(self):
+        msg = self.msg_entry.get()
+        if msg:
+            self.core.send(msg)
+            # We pass 'True' to indicate this is a 'Sent' message for the logger
+            self.log_to_chat(f"[You] {msg}")
+            self.msg_entry.delete(0, tk.END)
+
+    def on_connected(self, msg):
+        self.log_to_chat(f"[SYSTEM] {msg}")
+        self.send_btn.config(state="normal")
+
+    def on_disconnected(self):
+        self.log_to_chat("[SYSTEM] Disconnected")
+        self.toggle_inputs(True)
+        self.send_btn.config(state="disabled")
+
+    def log_to_chat(self, msg):
+        # 1. Save to file immediately (Persistence)
+        self.save_to_file(msg)
+        
+        # 2. Update GUI (Standard Tkinter thread update)
+        def update():
+            self.chat_log.config(state="normal")
+            self.chat_log.insert(tk.END, msg + "\n")
+            self.chat_log.see(tk.END)
+            self.chat_log.config(state="disabled")
+        self.root.after(0, update)
 
 if __name__ == "__main__":
     root = tk.Tk()
