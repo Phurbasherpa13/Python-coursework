@@ -119,6 +119,7 @@ class ChatCore:
         self.running = False
 
 
+class SecureChatApp:
 
 
 if __name__ == "__main__":
