@@ -120,6 +120,12 @@ class ChatCore:
 
 
 class SecureChatApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Secure WebSocket Chat")
+        self.root.geometry("600x700")
+        self.root.configure(bg="#1e1e1e")
+
 
 
 if __name__ == "__main__":
