@@ -129,6 +129,15 @@ class SecureChatApp:
         # File for saving history
         self.log_file = "chat_history.txt"
 
+        # Styling
+        self.style = ttk.Style()
+        self.style.theme_use('clam')
+        self.style.configure("TFrame", background="#1e1e1e")
+        self.style.configure("TLabel", background="#1e1e1e", foreground="#00ff00", font=("Consolas", 10))
+        self.style.configure("TButton", font=("Consolas", 10, "bold"), background="#00cc00")
+        self.style.map("TButton", background=[("active", "#00ff00")])
+
+
 if __name__ == "__main__":
     root = tk.Tk()
     app = SecureChatApp(root)
