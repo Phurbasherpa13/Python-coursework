@@ -15,7 +15,11 @@ Asynchronous Architecture: Implements asyncio for handling concurrent network op
 **🛠️ Tech Stack**
 
 **Languag**e: Python 3.12
+
 **GUI Framework**: Tkinter
+
 **Networking**: WebSockets
+
 **Concurrency**: Asyncio & Threading
+
 **Cryptography**: cryptography.fernet, hashlib
